@@ -1,9 +1,14 @@
 package libs
 
-func SumOfMultiples(count int) int {
+type Boundary struct {
+  start int
+  end int
+}
+
+func SumOfMultiples(start int, end int) int {
   sum := 0;
 
-  for n := 1; n < count; n++ {
+  for n := start; n < end; n++ {
     if n % 3 == 0 || n % 5 == 0 {
       sum += n
     }

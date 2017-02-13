@@ -9,11 +9,17 @@ package main
 import "fmt"
 import "github.com/jiqiang/project-euler/libs"
 
-const MAX_NUM = 1000
-
 func main() {
+  results := make(chan int, 2)
 
-  sum := libs.SumOfMultiples(MAX_NUM)
+  go func() {
+    results <- libs.SumOfMultiples(1, 500)
+  }()
 
-  fmt.Println(sum)
+  go func() {
+    results <- libs.SumOfMultiples(500, 1000)
+  }()
+
+  fmt.Println(<-results + <-results)
+
 }
