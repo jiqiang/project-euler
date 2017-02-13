@@ -1,10 +1,5 @@
 package libs
 
-type Boundary struct {
-  start int
-  end int
-}
-
 func SumOfMultiples(start int, end int) int {
   sum := 0;
 
