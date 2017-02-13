@@ -1,23 +1,21 @@
 package libs
 
-func EvenFibonacci(term int) <-chan int {
-  out := make(chan int)
+func EvenFibonacci(term int) []int {
+  var evenFibs []int
 
   a, b := 1, 2
-  go func() {
-    for {
-      if a > term {
-        break;
-      }
 
-      if a % 2 != 0 {
-        out <- a
-      }
-
-      a, b = b, a + b
+  for {
+    if a > term {
+      break;
     }
-    close(out)
-  }()
 
-  return out
+    if a % 2 == 0 {
+      evenFibs = append(evenFibs, a)
+    }
+
+    a, b = b, a + b
+  }
+
+  return evenFibs
 }

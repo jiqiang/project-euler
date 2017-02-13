@@ -13,12 +13,8 @@ import "fmt"
 import "github.com/jiqiang/project-euler/libs"
 
 func main() {
-  fibChan := make(<-chan int)
-
-  fibChan = libs.EvenFibonacci(4000000)
-
   sum := 0
-  for n := range fibChan {
+  for _, n := range libs.EvenFibonacci(4000000) {
     sum += n
   }
 
