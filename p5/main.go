@@ -9,5 +9,5 @@ import "fmt"
 import "github.com/jiqiang/project-euler/p5/lib"
 
 func main() {
-  fmt.Println(lib.EvenlyDivisibleNumber(1, 20))
+  fmt.Println(lib.LeastCommonMultiple(6))
 }

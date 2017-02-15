@@ -1,26 +1,32 @@
 package lib
 
-import "fmt"
+func LeastCommonMultiple(max int) int {
 
-func EvenlyDivisibleNumber(from int, to int) int {
+  var isLcm bool
 
-  value := 1
-  for j := 2; j <= 20; j++ {
-    if IsPrimeNumber(j) {
-      value = value * j
+  var lcm int
+
+  lcm = max
+
+  for i := 2; ; i++ {
+
+    isLcm = true
+
+    for n := 2; n < max; n++ {
+
+      if lcm % n != 0 {
+        isLcm = false
+        break
+      }
     }
+
+    if isLcm {
+      break
+    }
+
+    lcm = max * i
   }
 
-  fmt.Println(value)
+  return lcm
 
-  return 1
-}
-
-func IsPrimeNumber(n int) bool {
-  for i := 2; i < n; i++ {
-    if n % i == 0 {
-      return false
-    }
-  }
-  return true
 }
