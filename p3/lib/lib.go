@@ -1,4 +1,4 @@
-package libs
+package lib
 
 func MaxPrimeFactor(num int) int {
   for i := 2; i < num; i++ {

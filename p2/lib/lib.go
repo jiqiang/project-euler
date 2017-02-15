@@ -1,4 +1,4 @@
-package libs
+package lib
 
 func EvenFibonacci(term int) []int {
   var evenFibs []int
