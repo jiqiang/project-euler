@@ -1,0 +1,13 @@
+/*
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+*/
+package main
+
+import "fmt"
+import "github.com/jiqiang/project-euler/p5/lib"
+
+func main() {
+  fmt.Println(lib.EvenlyDivisibleNumber(1, 20))
+}
