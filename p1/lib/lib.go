@@ -1,4 +1,4 @@
-package libs
+package lib
 
 func SumOfMultiples(start int, end int) int {
   sum := 0;
