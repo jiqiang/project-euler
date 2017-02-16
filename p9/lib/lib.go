@@ -15,6 +15,10 @@ func P9() (int, int, int, int) {
     pts := PythagoreanTriplet(n)
     find = false
     for _, pt := range pts {
+      if 1000 % (pt.x + pt.y + pt.z) != 0 {
+        continue
+      }
+
       if ScaleMatch(pt, 1000) {
         theOne = pt
         find = true
