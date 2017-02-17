@@ -12,10 +12,10 @@ Find the difference between the sum of the squares of the first one hundred natu
 package main
 
 import (
-  "fmt"
-  "github.com/jiqiang/project-euler/p6/lib"
+	"fmt"
+	"github.com/jiqiang/project-euler/eulerlibs"
 )
 
 func main() {
-  fmt.Println(lib.SquareOfSum(100) - lib.SumOfSquares(100))
+	fmt.Println(eulerlibs.RunP6(100))
 }
