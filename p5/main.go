@@ -6,8 +6,8 @@ What is the smallest positive number that is evenly divisible by all of the numb
 package main
 
 import "fmt"
-import "github.com/jiqiang/project-euler/p5/lib"
+import "github.com/jiqiang/project-euler/eulerlibs"
 
 func main() {
-  fmt.Println(lib.LeastCommonMultiple(20))
+	fmt.Println(eulerlibs.LeastCommonMultiple(20))
 }
