@@ -7,10 +7,10 @@ What is the 10 001st prime number?
 package main
 
 import (
-  "fmt"
-  "github.com/jiqiang/project-euler/p7/lib"
+	"fmt"
+	"github.com/jiqiang/project-euler/eulerlibs"
 )
 
 func main() {
-  fmt.Println(lib.P7(10001))
+	fmt.Println(eulerlibs.RunP7(10001))
 }
