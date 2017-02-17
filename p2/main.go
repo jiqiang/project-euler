@@ -10,13 +10,8 @@ four million, find the sum of the even-valued terms.
 package main
 
 import "fmt"
-import "github.com/jiqiang/project-euler/p2/lib"
+import "github.com/jiqiang/project-euler/eulerlibs"
 
 func main() {
-  sum := 0
-  for _, n := range lib.EvenFibonacci(4000000) {
-    sum += n
-  }
-
-  fmt.Println(sum)
+	fmt.Println(eulerlibs.RunP2(4000000))
 }
