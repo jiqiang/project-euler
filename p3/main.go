@@ -6,11 +6,11 @@ What is the largest prime factor of the number 600851475143 ?
 package main
 
 import "fmt"
-import "github.com/jiqiang/project-euler/p3/lib"
+import "github.com/jiqiang/project-euler/eulerlibs"
 
 func main() {
 
-  maxPrimeFacotor := lib.MaxPrimeFactor(600851475143)
+	maxPrimeFacotor := eulerlibs.MaxPrimeFactor(600851475143)
 
-  fmt.Println(maxPrimeFacotor)
+	fmt.Println(maxPrimeFacotor)
 }
