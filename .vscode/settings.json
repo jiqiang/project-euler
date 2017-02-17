@@ -3,5 +3,6 @@
     "files.autoSave": "off",
     "go.formatOnSave": true,
     "go.buildOnSave": false,
-    "go.formatTool": "gofmt"
+    "go.formatTool": "gofmt",
+    "editor.insertSpaces": false
 }

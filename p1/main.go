@@ -7,19 +7,19 @@ multiples of 3 or 5 below 1000.
 package main
 
 import "fmt"
-import "github.com/jiqiang/project-euler/p1/lib"
+import "github.com/jiqiang/project-euler/eulerlibs"
 
 func main() {
-  results := make(chan int, 2)
+	results := make(chan int, 2)
 
-  go func() {
-    results <- lib.SumOfMultiples(1, 500)
-  }()
+	go func() {
+		results <- eulerlibs.SumOfMultiples(1, 500)
+	}()
 
-  go func() {
-    results <- lib.SumOfMultiples(500, 1000)
-  }()
+	go func() {
+		results <- eulerlibs.SumOfMultiples(500, 1000)
+	}()
 
-  fmt.Println(<-results + <-results)
+	fmt.Println(<-results + <-results)
 
 }
