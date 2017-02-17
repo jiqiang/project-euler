@@ -4,5 +4,6 @@
     "go.formatOnSave": true,
     "go.buildOnSave": false,
     "go.formatTool": "gofmt",
-    "editor.insertSpaces": false
+    "editor.insertSpaces": false,
+    "editor.rulers": [80]
 }
