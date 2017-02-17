@@ -1,13 +1,13 @@
-package lib
+package eulerlibs
 
-// PythagoreanTriple is a function.
+// PythagoreanTriple is a struct which holds x, y, z.
 type PythagoreanTriple struct {
 	x int
 	y int
 	z int
 }
 
-// P9 is a function
+// P9 runs problem 9 solution.
 func P9() (int, int, int, int) {
 
 	var theOne PythagoreanTriple
@@ -57,7 +57,7 @@ func PythagoreanTriplet(r int) []PythagoreanTriple {
 	return pts
 }
 
-// ScaleMatch is a function
+// ScaleMatch scales pythagorean triple to match given number.
 func ScaleMatch(pt PythagoreanTriple, sum int) bool {
 	for i := 2; ; i++ {
 

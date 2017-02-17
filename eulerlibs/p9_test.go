@@ -1,4 +1,4 @@
-package lib
+package eulerlibs
 
 import "testing"
 
