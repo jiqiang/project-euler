@@ -35,3 +35,39 @@ func VerticalCheck(grid [20][20]int64) int64 {
 	}
 	return max
 }
+
+// DiagonalCheck1 retuns product of 4 adjcent numbers diagonally.
+func DiagonalCheck1(grid [20][20]int64) int64 {
+	var p, max int64
+	max = 0
+	for i := 0; i+3 < len(grid); i++ {
+		for j := 0; j+3 < len(grid[i]); j++ {
+			if grid[i][j] == 0 || grid[i+1][j+1] == 0 || grid[i+2][j+2] == 0 || grid[i+3][j+3] == 0 {
+				continue
+			}
+			p = grid[i][j] * grid[i+1][j+1] * grid[i+2][j+2] * grid[i+3][j+3]
+			if max < p {
+				max = p
+			}
+		}
+	}
+	return max
+}
+
+// DiagonalCheck2 retuns product of 4 adjcent numbers diagonally.
+func DiagonalCheck2(grid [20][20]int64) int64 {
+	var p, max int64
+	max = 0
+	for i := 0; i+3 < len(grid); i++ {
+		for j := 3; j < len(grid[i]); j++ {
+			if grid[i][j] == 0 || grid[i+1][j-1] == 0 || grid[i+2][j-2] == 0 || grid[i+3][j-3] == 0 {
+				continue
+			}
+			p = grid[i][j] * grid[i+1][j-1] * grid[i+2][j-2] * grid[i+3][j-3]
+			if max < p {
+				max = p
+			}
+		}
+	}
+	return max
+}

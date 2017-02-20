@@ -60,5 +60,6 @@ func main() {
 
 	fmt.Println(eulerlibs.HorizontalCheck(grid))
 	fmt.Println(eulerlibs.VerticalCheck(grid))
-
+	fmt.Println(eulerlibs.DiagonalCheck1(grid))
+	fmt.Println(eulerlibs.DiagonalCheck2(grid))
 }
