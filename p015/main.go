@@ -7,32 +7,52 @@ type node struct {
 	y int
 }
 
+func done(ns []node, max int) (bool, int) {
+	count := 0
+	for _, n := range ns {
+		if n.x < max || n.y < max {
+			return false, count
+		}
+		count++
+	}
+	return true, count
+}
+
 func main() {
 
-	var nodes, tempNodes []node
+	max := 10
+
 	n := node{0, 0}
-	max := 3
-	tempNodes = append(tempNodes, n)
 
-	for i := 1; i <= max; i++ {
-		for _, _n := range tempNodes {
+	var ns1, ns2 []node
 
+	ns1 = append(ns1, n)
+
+	for {
+		for _, _n := range ns1 {
 			if _n.x < max {
-				nn := node{_n.x + 1, _n.y}
-				nodes = append(nodes, nn)
+				tn := node{_n.x + 1, _n.y}
+				ns2 = append(ns2, tn)
 			}
 
 			if _n.y < max {
-				nn := node{_n.x, _n.y + 1}
-				nodes = append(nodes, nn)
+				tn := node{_n.x, _n.y + 1}
+				ns2 = append(ns2, tn)
 			}
 		}
-		tempNodes = nodes
-		nodes = nil
+
+		done, count := done(ns2, max)
+
+		fmt.Println(len(ns2))
+		//fmt.Println(ns2)
+
+		if done {
+			fmt.Println(count)
+			break
+		}
+
+		ns1 = ns2
+		ns2 = nil
 	}
 
-	fmt.Println(n)
-	fmt.Println(nodes)
-	fmt.Println(tempNodes)
-	fmt.Println(max)
 }
