@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 type node struct {
@@ -9,20 +10,31 @@ type node struct {
 	y int
 }
 
-func display(n node, c chan node) {
+func process(in chan *node, out chan *node) {
 	go func() {
-		c <- n
+		for {
+			n := <-in
+			fmt.Println(*n)
+			if n.x < 2 {
+				out <- &node{n.x + 1, n.y}
+			}
+
+			if n.y < 2 {
+				out <- &node{n.x, n.y + 1}
+			}
+		}
 	}()
 }
 
 func main() {
 
-	n := node{0, 0}
+	in, out := make(chan *node), make(chan *node)
 
-	c := make(chan node)
+	process(in, out)
+	process(out, in)
 
-	display(n, c)
+	in <- &node{0, 0}
 
-	fmt.Println(<-c)
+	time.Sleep(3 * time.Second)
 
 }
