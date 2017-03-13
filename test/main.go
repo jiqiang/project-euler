@@ -10,31 +10,25 @@ type node struct {
 	y int
 }
 
-func process(in chan *node, out chan *node) {
-	go func() {
-		for {
-			n := <-in
-			fmt.Println(*n)
-			if n.x < 2 {
-				out <- &node{n.x + 1, n.y}
-			}
+func process(tube chan node) {
+	for {
+		n := <-tube
+		fmt.Println(n)
+		time.Sleep(100 * time.Millisecond)
+		tube <- node{n.x + 1, n.y}
 
-			if n.y < 2 {
-				out <- &node{n.x, n.y + 1}
-			}
-		}
-	}()
+	}
 }
 
 func main() {
 
-	in, out := make(chan *node), make(chan *node)
+	n := node{0, 0}
+	tube := make(chan node)
 
-	process(in, out)
-	process(out, in)
+	go process(tube)
+	go process(tube)
 
-	in <- &node{0, 0}
-
-	time.Sleep(3 * time.Second)
-
+	tube <- n
+	time.Sleep(1 * time.Second)
+	<-tube
 }
