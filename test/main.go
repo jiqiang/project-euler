@@ -15,8 +15,15 @@ func process(tube chan node) {
 		n := <-tube
 		fmt.Println(n)
 		time.Sleep(100 * time.Millisecond)
-		tube <- node{n.x + 1, n.y}
-
+		if n.x == -1 && n.y == -1 {
+			tube <- node{-1, -1}
+		} else if n.x < 2 {
+			tube <- node{n.x + 1, n.y}
+		} else if n.y < 2 {
+			tube <- node{n.x, n.y + 1}
+		} else {
+			tube <- node{-1, -1}
+		}
 	}
 }
 
