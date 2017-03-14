@@ -1,58 +1,49 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 type node struct {
 	x int
 	y int
 }
 
-func done(ns []node, max int) (bool, int) {
-	count := 0
-	for _, n := range ns {
-		if n.x < max || n.y < max {
-			return false, count
+const limit int = 10
+
+func process(id int, in chan node) chan node {
+	out := make(chan node, 1048576)
+	go func() {
+		for n := range in {
+
+			fmt.Println(id, len(in))
+
+			if n.x < limit {
+				out <- node{n.x + 1, n.y}
+			}
+
+			if n.y < limit {
+				out <- node{n.x, n.y + 1}
+			}
+
 		}
-		count++
-	}
-	return true, count
+	}()
+	return out
 }
 
 func main() {
 
-	max := 10
-
 	n := node{0, 0}
+	in := make(chan node, 1048576)
 
-	var ns1, ns2 []node
-
-	ns1 = append(ns1, n)
-
-	for {
-		for _, _n := range ns1 {
-			if _n.x < max {
-				tn := node{_n.x + 1, _n.y}
-				ns2 = append(ns2, tn)
-			}
-
-			if _n.y < max {
-				tn := node{_n.x, _n.y + 1}
-				ns2 = append(ns2, tn)
-			}
-		}
-
-		done, count := done(ns2, max)
-
-		fmt.Println(len(ns2))
-		//fmt.Println(ns2)
-
-		if done {
-			fmt.Println(count)
-			break
-		}
-
-		ns1 = ns2
-		ns2 = nil
+	for i := 0; i < 20; i++ {
+		out := process(1, in)
+		in = out
+		time.Sleep(1 * time.Second)
 	}
 
+	in <- n
+
+	<-time.After(time.Second * 60)
 }
