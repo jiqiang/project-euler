@@ -10,7 +10,7 @@ type node struct {
 	y int
 }
 
-const limit int = 10
+const limit int = 20
 
 func process(id int, tube chan node, count *int) {
 
@@ -30,7 +30,7 @@ func process(id int, tube chan node, count *int) {
 		if n.x == limit && n.y == limit {
 			*count++
 		}
-		time.Sleep(1 * time.Second)
+		//time.Sleep(1 * time.Second)
 	}
 
 }
@@ -38,7 +38,7 @@ func process(id int, tube chan node, count *int) {
 func main() {
 
 	n := node{0, 0}
-	tube := make(chan node, 100)
+	tube := make(chan node, 140000000000)
 	count1, count2, count3, count4, count5 := 0, 0, 0, 0, 0
 
 	go process(1, tube, &count1)
@@ -49,6 +49,6 @@ func main() {
 
 	tube <- n
 
-	<-time.After(time.Second * 60)
+	<-time.After(time.Minute * 30)
 	fmt.Println(count1 + count2 + count3 + count4 + count5)
 }
