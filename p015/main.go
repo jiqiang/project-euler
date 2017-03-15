@@ -12,48 +12,55 @@ type node struct {
 
 const limit int = 3
 
-func process(id int, in chan node) chan node {
-	out := make(chan node, 1048576)
+func process(id int, n node) {
+	tube := make(chan node, 1048576)
 	go func() {
-		for n := range in {
+		for {
+			n1 := <-tube
 
-			if n.x < limit {
-				out <- node{n.x + 1, n.y}
+			if n1.x == limit || n1.y == limit {
+				fmt.Println(id, n1)
+				continue
 			}
 
-			if n.y < limit {
-				out <- node{n.x, n.y + 1}
+			if n1.x < limit {
+				tube <- node{n1.x + 1, n1.y}
 			}
 
-			//time.Sleep(1 * time.Second)
+			if n1.y < limit {
+				tube <- node{n1.x, n1.y + 1}
+			}
 		}
-		close(out)
 	}()
-	return out
+
+	go func() {
+		for {
+			n2 := <-tube
+
+			if n2.x == limit || n2.y == limit {
+				fmt.Println(id, n2)
+				continue
+			}
+
+			if n2.x < limit {
+				tube <- node{n2.x + 1, n2.y}
+			}
+
+			if n2.y < limit {
+				tube <- node{n2.x, n2.y + 1}
+			}
+		}
+	}()
+
+	tube <- n
 }
 
 func main() {
 
-	n := node{0, 0}
-	in := make(chan node, 1048576)
-	count := 0
-
-	out1 := process(1, in)
-	out2 := process(2, out1)
-	out3 := process(2, out2)
-	out4 := process(2, out3)
-
-	in <- n
-
-	go func() {
-		for {
-			_n := <-out4
-			fmt.Println(_n)
-			if _n.x == limit && _n.y == limit {
-				count++
-			}
-		}
-	}()
+	process(1, node{2, 0})
+	process(2, node{1, 1})
+	process(3, node{1, 1})
+	process(4, node{0, 2})
 
 	<-time.After(time.Second * 10)
 
