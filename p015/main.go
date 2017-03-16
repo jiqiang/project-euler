@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"time"
 )
 
@@ -10,16 +11,18 @@ type node struct {
 	y int
 }
 
-const limit int = 3
+const limit int = 20
 
 func process(id int, n node) {
-	tube := make(chan node, 1048576)
+	tube := make(chan node, 904857600)
+
 	go func() {
 		for {
-			n1 := <-tube
 
+			n1 := <-tube
+			//fmt.Printf("%d-1 %d\n", id, len(tube))
 			if n1.x == limit || n1.y == limit {
-				fmt.Println(id, n1)
+				fmt.Println(id, len(tube))
 				continue
 			}
 
@@ -35,10 +38,11 @@ func process(id int, n node) {
 
 	go func() {
 		for {
-			n2 := <-tube
 
+			n2 := <-tube
+			//fmt.Printf("%d-2 %d\n", id, len(tube))
 			if n2.x == limit || n2.y == limit {
-				fmt.Println(id, n2)
+				fmt.Println(id, len(tube))
 				continue
 			}
 
@@ -57,11 +61,16 @@ func process(id int, n node) {
 
 func main() {
 
-	process(1, node{2, 0})
-	process(2, node{1, 1})
-	process(3, node{1, 1})
-	process(4, node{0, 2})
+	//process(1, node{0, 0})
+	runtime.GOMAXPROCS(runtime.NumCPU() * 2)
+	process(1, node{3, 1})
+	process(2, node{2, 2})
+	process(3, node{2, 1})
+	process(4, node{1, 2})
+	process(5, node{0, 3})
 
-	<-time.After(time.Second * 10)
+	fmt.Println()
+
+	<-time.After(time.Minute * 3)
 
 }

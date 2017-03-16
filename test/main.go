@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 type node struct {
@@ -10,45 +9,30 @@ type node struct {
 	y int
 }
 
-const limit int = 20
-
-func process(id int, tube chan node, count *int) {
-
-	for {
-		n := <-tube
-
-		fmt.Println(id, len(tube))
-
-		if n.x < limit {
-			tube <- node{n.x + 1, n.y}
-		}
-
-		if n.y < limit {
-			tube <- node{n.x, n.y + 1}
-		}
-
-		if n.x == limit && n.y == limit {
-			*count++
-		}
-		//time.Sleep(1 * time.Second)
+func process(n node) uint64 {
+	if n.x == 0 && n.y == 0 {
+		return 1
 	}
 
+	var paths uint64
+
+	paths = 0
+
+	if n.x > 0 {
+		paths += process(node{n.x - 1, n.y})
+	}
+
+	if n.y > 0 {
+		paths += process(node{n.x, n.y - 1})
+	}
+
+	return paths
 }
 
 func main() {
 
-	n := node{0, 0}
-	tube := make(chan node, 140000000000)
-	count1, count2, count3, count4, count5 := 0, 0, 0, 0, 0
+	result := process(node{20, 20})
 
-	go process(1, tube, &count1)
-	go process(2, tube, &count2)
-	go process(3, tube, &count3)
-	go process(4, tube, &count4)
-	go process(5, tube, &count5)
+	fmt.Println(result)
 
-	tube <- n
-
-	<-time.After(time.Minute * 30)
-	fmt.Println(count1 + count2 + count3 + count4 + count5)
 }
