@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"time"
 )
 
@@ -11,66 +10,35 @@ type node struct {
 	y int
 }
 
-const limit int = 20
+const limit int = 3
 
-func process(id int, n node) {
-	tube := make(chan node, 904857600)
+func process(id int, tube chan node) {
+	for {
+		n := <-tube
 
-	go func() {
-		for {
+		fmt.Println(id, n)
+		//fmt.Println(len(tube))
 
-			n1 := <-tube
-			//fmt.Printf("%d-1 %d\n", id, len(tube))
-			if n1.x == limit || n1.y == limit {
-				fmt.Println(id, len(tube))
-				continue
-			}
-
-			if n1.x < limit {
-				tube <- node{n1.x + 1, n1.y}
-			}
-
-			if n1.y < limit {
-				tube <- node{n1.x, n1.y + 1}
-			}
+		if n.x < limit {
+			tube <- node{n.x + 1, n.y}
 		}
-	}()
 
-	go func() {
-		for {
-
-			n2 := <-tube
-			//fmt.Printf("%d-2 %d\n", id, len(tube))
-			if n2.x == limit || n2.y == limit {
-				fmt.Println(id, len(tube))
-				continue
-			}
-
-			if n2.x < limit {
-				tube <- node{n2.x + 1, n2.y}
-			}
-
-			if n2.y < limit {
-				tube <- node{n2.x, n2.y + 1}
-			}
+		if n.y < limit {
+			tube <- node{n.x, n.y + 1}
 		}
-	}()
-
-	tube <- n
+	}
 }
 
 func main() {
 
-	//process(1, node{0, 0})
-	runtime.GOMAXPROCS(runtime.NumCPU() * 2)
-	process(1, node{3, 1})
-	process(2, node{2, 2})
-	process(3, node{2, 1})
-	process(4, node{1, 2})
-	process(5, node{0, 3})
+	tube := make(chan node, 100)
 
-	fmt.Println()
+	go process(1, tube)
+	go process(2, tube)
+	go process(3, tube)
 
-	<-time.After(time.Minute * 3)
+	tube <- node{0, 0}
+
+	<-time.After(time.Second * 15)
 
 }

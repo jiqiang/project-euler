@@ -31,7 +31,7 @@ func process(n node) uint64 {
 
 func main() {
 
-	result := process(node{20, 20})
+	result := process(node{2, 2})
 
 	fmt.Println(result)
 
