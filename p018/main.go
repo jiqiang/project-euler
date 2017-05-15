@@ -56,6 +56,18 @@ func displayMatrix(matrix [][]int) {
 	}
 }
 
+func insert(matrix [][]int, i int, j int) {
+	if i == len(matrix) {
+		return
+	}
+	for idx := 0; idx < len(matrix[i]); idx++ {
+		fmt.Println(matrix[i][idx])
+		insert(matrix, i+1, j)
+	}
+
+	//insert(matrix, i+1, j+1)
+}
+
 func main() {
 	matrix, err := getMatrixFromDataFile("./data")
 	if err != nil {
@@ -63,4 +75,7 @@ func main() {
 	}
 
 	displayMatrix(matrix)
+
+	insert(matrix, 0, 0)
+
 }
