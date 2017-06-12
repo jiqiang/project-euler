@@ -56,26 +56,33 @@ func displayMatrix(matrix [][]int) {
 	}
 }
 
-func insert(matrix [][]int, i int, j int) {
-	if i == len(matrix) {
-		return
-	}
-	for idx := 0; idx < len(matrix[i]); idx++ {
-		fmt.Println(matrix[i][idx])
-		insert(matrix, i+1, j)
-	}
-
-	//insert(matrix, i+1, j+1)
-}
-
 func main() {
 	matrix, err := getMatrixFromDataFile("./data")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	displayMatrix(matrix)
+	//displayMatrix(matrix)
 
-	insert(matrix, 0, 0)
+	sum, index := 0, 0
+
+	for i, r := range matrix {
+
+		if i == 0 {
+			sum += r[index]
+			continue
+		}
+
+		if r[index] >= r[index+1] {
+			sum += r[index]
+			fmt.Println(r[index])
+		} else {
+			sum += r[index+1]
+			fmt.Println(r[index+1])
+			index++
+		}
+	}
+
+	fmt.Println(sum)
 
 }
