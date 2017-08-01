@@ -9,10 +9,11 @@ import (
 	"strings"
 )
 
-type tree struct {
-	left  *tree
-	value int
-	right *tree
+// Tree represents a binary tree structure.
+type Tree struct {
+	Left  *Tree
+	Value int
+	Right *Tree
 }
 
 func stringSliceToIntSlice(sString []string) []int {
@@ -69,13 +70,15 @@ func insert(matrix [][]int, i int, j int) {
 }
 
 func main() {
-	matrix, err := getMatrixFromDataFile("./data")
-	if err != nil {
-		log.Fatal(err)
-	}
+	// matrix, err := getMatrixFromDataFile("./data")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	displayMatrix(matrix)
+	// displayMatrix(matrix)
 
-	insert(matrix, 0, 0)
+	// insert(matrix, 0, 0)
+
+	for i := 0; i < 
 
 }
