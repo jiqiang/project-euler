@@ -65,6 +65,13 @@ func main() {
 
 	displayMatrix(matrix)
 
-	// insert(matrix, 0, 0)
-
+	for i := 0; i < len(matrix); i++ {
+		for j := 0; j < len(matrix[i]); j++ {
+			if i+1 == len(matrix) {
+				fmt.Println(matrix[i][j])
+			} else {
+				fmt.Println(matrix[i][j], matrix[i+1][j], matrix[i+1][j+1])
+			}
+		}
+	}
 }
