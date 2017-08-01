@@ -57,28 +57,14 @@ func displayMatrix(matrix [][]int) {
 	}
 }
 
-func insert(matrix [][]int, i int, j int) {
-	if i == len(matrix) {
-		return
-	}
-	for idx := 0; idx < len(matrix[i]); idx++ {
-		fmt.Println(matrix[i][idx])
-		insert(matrix, i+1, j)
-	}
-
-	//insert(matrix, i+1, j+1)
-}
-
 func main() {
-	// matrix, err := getMatrixFromDataFile("./data")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	matrix, err := getMatrixFromDataFile("./smalldata")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// displayMatrix(matrix)
+	displayMatrix(matrix)
 
 	// insert(matrix, 0, 0)
-
-	for i := 0; i < 
 
 }
