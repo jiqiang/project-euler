@@ -57,21 +57,43 @@ func displayMatrix(matrix [][]int) {
 	}
 }
 
+func getRowWithMax(row []int) []int {
+	var newRow = []int{}
+	for i := 0; i < len(row); i++ {
+		if i+1 < len(row) {
+			if row[i] >= row[i+1] {
+				newRow = append(newRow, row[i])
+			} else {
+				newRow = append(newRow, row[i+1])
+			}
+		}
+	}
+	return newRow
+}
+
 func main() {
-	matrix, err := getMatrixFromDataFile("./smalldata")
+	matrix, err := getMatrixFromDataFile("./data")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	displayMatrix(matrix)
+	//displayMatrix(matrix)
 
-	for i := 0; i < len(matrix); i++ {
+	var rowWithMax, lastRowWithMax []int
+
+	lastRowWithMax = getRowWithMax(matrix[len(matrix)-1])
+
+	numOfRows := len(matrix)
+
+	for i := numOfRows - 2; i > 0; i-- {
+		rowWithMax = nil
 		for j := 0; j < len(matrix[i]); j++ {
-			if i+1 == len(matrix) {
-				fmt.Println(matrix[i][j])
-			} else {
-				fmt.Println(matrix[i][j], matrix[i+1][j], matrix[i+1][j+1])
-			}
+			rowWithMax = append(rowWithMax, lastRowWithMax[j]+matrix[i][j])
 		}
+
+		lastRowWithMax = getRowWithMax(rowWithMax)
 	}
+
+	fmt.Println(lastRowWithMax[0] + matrix[0][0])
+
 }
