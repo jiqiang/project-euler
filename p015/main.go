@@ -1,44 +1,41 @@
+//http://www.mozartreina.com/counting-lattice-paths.html
 package main
 
 import (
 	"fmt"
-	"time"
 )
 
-type node struct {
-	x int
-	y int
-}
-
-const limit int = 3
-
-func process(id int, tube chan node) {
-	for {
-		n := <-tube
-
-		fmt.Println(id, n)
-		//fmt.Println(len(tube))
-
-		if n.x < limit {
-			tube <- node{n.x + 1, n.y}
-		}
-
-		if n.y < limit {
-			tube <- node{n.x, n.y + 1}
+func getNextRow(row []int) []int {
+	var newRow = []int{}
+	var n int
+	for i := 1; i < len(row); i++ {
+		if i == 1 {
+			n = row[i] * 2
+			newRow = append(newRow, n)
+		} else {
+			n = newRow[len(newRow)-1] + row[i]
+			newRow = append(newRow, n)
 		}
 	}
+
+	if len(newRow) > 1 {
+		newRow = getNextRow(newRow)
+	}
+
+	return newRow
 }
 
 func main() {
 
-	tube := make(chan node, 100)
+	n := 21
 
-	go process(1, tube)
-	go process(2, tube)
-	go process(3, tube)
+	var start = []int{}
 
-	tube <- node{0, 0}
+	for i := 0; i < n; i++ {
+		start = append(start, 1)
+	}
 
-	<-time.After(time.Second * 15)
+	row := getNextRow(start)
+	fmt.Println(row[0])
 
 }
