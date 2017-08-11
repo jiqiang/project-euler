@@ -15,6 +15,8 @@ func TestIsMultiples(t *testing.T) {
 		{3, 3, true},
 		{0, 3, false},
 		{7, 3, false},
+		{7, 5, false},
+		{10, 5, true},
 	}
 
 	for _, tt := range tests {
