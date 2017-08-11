@@ -3,41 +3,25 @@ package main
 import "testing"
 
 func TestIsMultiples(t *testing.T) {
-	var actual, expected bool
-	var base, target int
 
 	h := p001Helper{}
 
-	target = 6
-	base = 3
-	expected = true
-	actual = h.isMultiples(target, base)
-	if actual != expected {
-		t.Errorf("%d is not multiples of %d", target, base)
+	var tests = []struct {
+		target   int
+		base     int
+		expected bool
+	}{
+		{6, 3, true},
+		{3, 3, true},
+		{0, 3, false},
+		{7, 3, false},
 	}
 
-	target = 3
-	base = 3
-	expected = true
-	actual = h.isMultiples(target, base)
-	if actual != expected {
-		t.Errorf("%d is not multiples of %d", target, base)
-	}
-
-	target = 0
-	base = 3
-	expected = false
-	actual = h.isMultiples(target, base)
-	if actual != expected {
-		t.Errorf("%d is not multiples of %d", target, base)
-	}
-
-	target = 7
-	base = 3
-	expected = false
-	actual = h.isMultiples(target, base)
-	if actual != expected {
-		t.Errorf("%d is not multiples of %d", target, base)
+	for _, tt := range tests {
+		actual := h.isMultiples(tt.target, tt.base)
+		if actual != tt.expected {
+			t.Errorf("%d is not multiples of %d", tt.target, tt.base)
+		}
 	}
 }
 
