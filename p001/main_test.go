@@ -6,12 +6,12 @@ func TestIsMultiples(t *testing.T) {
 	var actual, expected bool
 	var base, target int
 
-	s := p001Solution{}
+	h := p001Helper{}
 
 	target = 6
 	base = 3
 	expected = true
-	actual = s.isMultiples(target, base)
+	actual = h.isMultiples(target, base)
 	if actual != expected {
 		t.Errorf("%d is not multiples of %d", target, base)
 	}
@@ -19,7 +19,7 @@ func TestIsMultiples(t *testing.T) {
 	target = 3
 	base = 3
 	expected = true
-	actual = s.isMultiples(target, base)
+	actual = h.isMultiples(target, base)
 	if actual != expected {
 		t.Errorf("%d is not multiples of %d", target, base)
 	}
@@ -27,7 +27,7 @@ func TestIsMultiples(t *testing.T) {
 	target = 0
 	base = 3
 	expected = false
-	actual = s.isMultiples(target, base)
+	actual = h.isMultiples(target, base)
 	if actual != expected {
 		t.Errorf("%d is not multiples of %d", target, base)
 	}
@@ -35,7 +35,7 @@ func TestIsMultiples(t *testing.T) {
 	target = 7
 	base = 3
 	expected = false
-	actual = s.isMultiples(target, base)
+	actual = h.isMultiples(target, base)
 	if actual != expected {
 		t.Errorf("%d is not multiples of %d", target, base)
 	}
@@ -44,11 +44,9 @@ func TestIsMultiples(t *testing.T) {
 func TestRun(t *testing.T) {
 	var actual, expected, target int
 
-	s := p001Solution{}
-
 	expected = 23
 	target = 10
-	actual = s.run(target, 3, 5)
+	actual = run(target, 3, 5)
 	if actual != expected {
 		t.Errorf("p001 takes %d as input and should return %d, it actually returns %d", target, expected, actual)
 	}

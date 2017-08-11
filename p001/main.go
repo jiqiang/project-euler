@@ -11,15 +11,14 @@ import (
 	"math"
 )
 
-type solution interface {
+type helper interface {
 	isMultiples(target int, base int) bool
-	run(target int, base1 int, base2 int) int
 }
 
-type p001Solution struct{}
+type p001Helper struct{}
 
 // isMultiples check if given target is multiples of given base.
-func (s p001Solution) isMultiples(target int, base int) bool {
+func (s p001Helper) isMultiples(target int, base int) bool {
 	if target < base {
 		return false
 	}
@@ -27,7 +26,10 @@ func (s p001Solution) isMultiples(target int, base int) bool {
 }
 
 // run runs p001 solution
-func (s p001Solution) run(target int, b1 int, b2 int) int {
+func run(target int, b1 int, b2 int) int {
+
+	h := p001Helper{}
+
 	i := b1
 	if b1 > b2 {
 		i = b2
@@ -39,7 +41,7 @@ func (s p001Solution) run(target int, b1 int, b2 int) int {
 			break
 		}
 
-		if s.isMultiples(i, b1) || s.isMultiples(i, b2) {
+		if h.isMultiples(i, b1) || h.isMultiples(i, b2) {
 			sum += i
 		}
 		i++
@@ -49,6 +51,5 @@ func (s p001Solution) run(target int, b1 int, b2 int) int {
 }
 
 func main() {
-	s := p001Solution{}
-	fmt.Println(s.run(1000, 3, 5))
+	fmt.Println(run(1000, 3, 5))
 }
