@@ -11,6 +11,9 @@
 // Evaluate the sum of all the amicable numbers under 10000.
 package main
 
+import "math"
+import "fmt"
+
 func sumOfSlice(s []int) int {
 	sum := 0
 	for _, v := range s {
@@ -19,6 +22,76 @@ func sumOfSlice(s []int) int {
 	return sum
 }
 
-func divisors(n int) map[int]int {
-	return map[int]int{1: 220, 2: 110, 4: 55, 5: 44, 10: 22, 11: 20}
+func divisors(n int) []int {
+	ds := []int{}
+	for i := 1; i < n; i++ {
+		if contains(ds, i) {
+			continue
+		}
+		m := math.Mod(float64(n), float64(i))
+		if m == float64(0) {
+			if i == 1 {
+				ds = append(ds, i)
+			} else if i == n/i {
+				ds = append(ds, i)
+			} else {
+				ds = append(ds, i, n/i)
+			}
+		}
+	}
+	return ds
+}
+
+func contains(ds []int, n int) bool {
+	for _, v := range ds {
+		if v == n {
+			return true
+		}
+	}
+	return false
+}
+
+func sumOfDivisors(n int) int {
+	ds := divisors(n)
+	sum := sumOfSlice(ds)
+	return sum
+}
+
+func run(n int) int {
+	s := []int{}
+	for i := 1; i < n; i++ {
+		if contains(s, i) {
+			continue
+		}
+		j := sumOfDivisors(i)
+		if sumOfDivisors(j) == i && i != j {
+			s = append(s, i, j)
+		}
+	}
+	return sumOfSlice(s)
+}
+
+func run2(n int) int {
+	c := make(chan int)
+	sum := 0
+	for i := 1; i < n; i++ {
+		go func(cc chan int, ii int) {
+			j := sumOfDivisors(ii)
+			if sumOfDivisors(j) == ii && ii != j {
+				c <- ii
+			} else {
+				c <- 0
+			}
+		}(c, i)
+	}
+
+	for i := 1; i < n; i++ {
+		sum += <-c
+	}
+
+	return sum
+}
+
+func main() {
+	fmt.Println(run2(10000))
 }
