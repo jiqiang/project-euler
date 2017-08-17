@@ -11,7 +11,6 @@
 // Evaluate the sum of all the amicable numbers under 10000.
 package main
 
-import "math"
 import "fmt"
 
 func sumOfSlice(s []int) int {
@@ -28,8 +27,8 @@ func divisors(n int) []int {
 		if contains(ds, i) {
 			continue
 		}
-		m := math.Mod(float64(n), float64(i))
-		if m == float64(0) {
+		m := n % i
+		if m == 0 {
 			if i == 1 {
 				ds = append(ds, i)
 			} else if i == n/i {
