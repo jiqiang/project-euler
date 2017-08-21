@@ -10,8 +10,23 @@ four million, find the sum of the even-valued terms.
 package main
 
 import "fmt"
-import "github.com/jiqiang/project-euler/eulerlibs"
+
+func sumOfEvenFibs(max int) int {
+	var a, b, sum int = 1, 2, 0
+
+	for {
+		if a > max {
+			return sum
+		}
+
+		if a%2 == 0 {
+			sum += a
+		}
+
+		a, b = b, a+b
+	}
+}
 
 func main() {
-	fmt.Println(eulerlibs.RunP2(4000000))
+	fmt.Println(sumOfEvenFibs(4000000))
 }
