@@ -8,23 +8,48 @@ import (
 	"strings"
 )
 
-func getNameList(file string) ([]string, error) {
-	data, err := ioutil.ReadFile("names.txt")
-	if err != nil {
-		return nil, err
-	}
-	names := []string{}
-	for _, line := range strings.Split(string(data), ",") {
-		names = append(names, line[1:len(line)-1])
-	}
-	sort.Strings(names)
-	return names, nil
+// LetterPositionMap represents a map which key is letter and value is position.
+var LetterPositionMap = map[string]int{
+	"A": 1, "B": 2, "C": 3, "D": 4,
+	"E": 5, "F": 6, "G": 7, "H": 8,
+	"I": 9, "J": 10, "K": 11, "L": 12,
+	"M": 13, "N": 14, "O": 15, "P": 16,
+	"Q": 17, "R": 18, "S": 19, "T": 20,
+	"U": 21, "V": 22, "W": 23, "X": 24,
+	"Y": 25, "Z": 26,
 }
 
-func getLetterPositonSum(name string, lpm map[string]int) int64 {
+// ExtractNamesFromString extracts names from giving string into a slice with
+// names sorted.
+func ExtractNamesFromString(str string) []string {
+	names := []string{}
+	cleanStr := strings.Trim(str, " ")
+	if len(cleanStr) == 0 {
+		return names
+	}
+	for _, name := range strings.Split(cleanStr, ",") {
+		cleanName := strings.Trim(name, " ")
+		names = append(names, cleanName[1:len(cleanName)-1])
+	}
+	sort.Strings(names)
+	return names
+}
+
+// GetContentStringFromFile gets content from a file without leading and ending
+// spaces
+func GetContentStringFromFile(filename string) (string, error) {
+	content, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(content)), nil
+}
+
+// GetLetterPositionSum sums all letters alphabetical position.
+func GetLetterPositionSum(name string) int64 {
 	sum := int64(0)
 	for _, l := range name {
-		p, ok := lpm[string(l)]
+		p, ok := LetterPositionMap[string(l)]
 		if ok {
 			sum += int64(p)
 		}
@@ -33,25 +58,15 @@ func getLetterPositonSum(name string, lpm map[string]int) int64 {
 }
 
 func main() {
-	letterPositionMap := map[string]int{
-		"A": 1, "B": 2, "C": 3, "D": 4,
-		"E": 5, "F": 6, "G": 7, "H": 8,
-		"I": 9, "J": 10, "K": 11, "L": 12,
-		"M": 13, "N": 14, "O": 15, "P": 16,
-		"Q": 17, "R": 18, "S": 19, "T": 20,
-		"U": 21, "V": 22, "W": 23, "X": 24,
-		"Y": 25, "Z": 26,
-	}
-
-	names, err := getNameList("names.txt")
+	content, err := GetContentStringFromFile("names.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	result := int64(0)
-	for idx, name := range names {
-		sum := getLetterPositonSum(name, letterPositionMap)
-		result += sum * int64(idx+1)
+	names := ExtractNamesFromString(content)
+	sum := int64(0)
+	for index, name := range names {
+		posSum := GetLetterPositionSum(name)
+		sum += int64(posSum) * int64(index+1)
 	}
-	fmt.Println(result)
+	fmt.Println(sum)
 }
